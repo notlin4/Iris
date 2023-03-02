@@ -1,9 +1,11 @@
 package net.coderbot.iris.texture.pbr;
 
 import com.mojang.blaze3d.platform.TextureUtil;
+import net.coderbot.iris.Iris;
 import net.coderbot.iris.mixin.texture.SpriteContentsAnimatedTextureAccessor;
 import net.coderbot.iris.mixin.texture.SpriteContentsFrameInfoAccessor;
 import net.coderbot.iris.mixin.texture.SpriteContentsTickerAccessor;
+import net.coderbot.iris.texture.pbr.loader.AtlasPBRLoader;
 import net.coderbot.iris.texture.pbr.loader.AtlasPBRLoader.PBRTextureAtlasSprite;
 import net.coderbot.iris.texture.util.TextureExporter;
 import net.coderbot.iris.texture.util.TextureManipulationUtil;
@@ -20,9 +22,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class PBRAtlasTexture extends AbstractTexture implements Dumpable {
@@ -183,9 +191,7 @@ public class PBRAtlasTexture extends AbstractTexture implements Dumpable {
 
 	@Override
 	public void dumpContents(ResourceLocation location, Path path) throws IOException {
-		String lvString3 = getAtlasId().toDebugFileName();
-		TextureUtil.writeAsPNG(path, lvString3, this.getId(), AtlasPBRLoader.fetchAtlasMipLevel(atlasTexture), ((TextureAtlasExtension) atlasTexture).getWidth(), ((TextureAtlasExtension) atlasTexture).getHeight());
-		dumpSpriteNames(path, lvString3, this.sprites);
+
 	}
 
 	private static void dumpSpriteNames(Path pPath0, String pString1, Map<ResourceLocation, TextureAtlasSprite> pMap2) {
