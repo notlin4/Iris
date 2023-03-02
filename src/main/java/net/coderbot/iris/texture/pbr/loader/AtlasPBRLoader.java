@@ -121,7 +121,7 @@ public class AtlasPBRLoader implements PBRTextureLoader<TextureAtlas> {
 		FrameSize frameSize = animationMetadata.calculateFrameSize(imageWidth, imageHeight);
 		int frameWidth = frameSize.width();
 		int frameHeight = frameSize.height();
-		if (!Mth.isDivisionInteger(imageWidth, frameWidth) || !Mth.isDivisionInteger(imageHeight, frameHeight)) {
+		if (!isDivisionInteger(imageWidth, frameWidth) || !isDivisionInteger(imageHeight, frameHeight)) {
 			Iris.logger.error("Image {} size {},{} is not multiple of frame size {},{}", pbrImageLocation, imageWidth, imageHeight, frameWidth, frameHeight);
 			nativeImage.close();
 			return null;
@@ -164,6 +164,10 @@ public class AtlasPBRLoader implements PBRTextureLoader<TextureAtlas> {
 		PBRSpriteContents pbrSpriteContents = new PBRSpriteContents(pbrSpriteName, new FrameSize(frameWidth, frameHeight), nativeImage, animationMetadata, pbrType);
 		pbrSpriteContents.increaseMipLevel(mipLevel);
 		return new PBRTextureAtlasSprite(pbrSpriteName, pbrSpriteContents, atlasWidth, atlasHeight, sprite.getX(), sprite.getY(), sprite);
+	}
+
+	private boolean isDivisionInteger(int image, int frame) {
+		return image / frame * frame == image;
 	}
 
 	protected static class PBRSpriteContents extends SpriteContents implements CustomMipmapGenerator.Provider {

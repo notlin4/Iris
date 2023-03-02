@@ -26,7 +26,7 @@ public class MixinTextureManager {
 
 	@Inject(method = "_dumpAllSheets", at = @At("TAIL"))
 	private void iris$dumpPBR(Path path, CallbackInfo ci) {
-		((AtlasPBRLoader) PBRTextureLoaderRegistry.INSTANCE.getLoader(TextureAtlas.class)).dumpTextures(path);
+
 	}
 
 	@Inject(method = "close()V", at = @At("TAIL"), remap = false)
